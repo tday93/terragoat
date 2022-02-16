@@ -1,16 +1,22 @@
-name: build
+---
+name: Checkov
 on:
   push:
     branches:
       - master
 jobs:
   build:
+
     runs-on: ubuntu-latest
     steps:
-      - name: Checkov GitHub Action
-        # You may pin to the exact commit or the version.
-        # uses: bridgecrewio/checkov-action@00cc657f4d415593e5c8897bc87f490497ccb5f9
-        uses: bridgecrewio/checkov-action@v12.641.0
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Test with Checkov
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
         with:
           directory: terraform/aws
-          framework: terraform
+          framework: terraform 
